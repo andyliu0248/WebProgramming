@@ -33,9 +33,9 @@
   
 # Tuesday, September 11th: HTML
 * Last class: recall how HTTP works
-* Q: How to browse web without web browser?
 * Recall question: if no port number is provided, the default port number to connect to on web server is...?
 * Recall question: what HTTP command is executed when entering URL address?
+* Q: How to browse web without web browser?
 * Demo: Web server
 * Recall question: if no file is provided in URL, the file with what name is generally served by default?
 * Take a look at the HTML
