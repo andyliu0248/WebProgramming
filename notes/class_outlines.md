@@ -30,15 +30,14 @@
 * HTTP commands: GET and POST
   - GET: Download data
   - POST: Upload data, send data to web server
-* Demo: Web server
-* Q: How to browse web without web browser?
   
 # Tuesday, September 11th: HTML
 * Last class: recall how HTTP works
+* Q: How to browse web without web browser?
 * Recall question: if no port number is provided, the default port number to connect to on web server is...?
 * Recall question: what HTTP command is executed when entering URL address?
+* Demo: Web server
 * Recall question: if no file is provided in URL, the file with what name is generally served by default?
-* To ponder: the best status code to use...?
 * Take a look at the HTML
 * What is markup?
   - The paragraph analogy
