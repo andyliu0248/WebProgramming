@@ -6,7 +6,12 @@
 <title>The Raven - Edgar Allan Poe</title>
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
 <script>
-	// Do something here...
+	function highlightParagraphs() {
+		paragraphs = document.getElementsByTagName("p");
+		for (count = 0; count < paragraphs.length; count++) {
+			paragraphs[count].style.backgroundColor = "yellow";
+		}
+	}
 </script>
 </head>
 <body>
