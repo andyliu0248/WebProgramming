@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
+<link rel="stylesheet" href="../stylesheets/style.css" />
+<title>COMP 20: Web Programming - Assignment 2: Closest MBTA Station</title>
+</head>
+
+<body>
+<h1>COMP 20: Web Programming</h1>
+<h2>Assignment 2: Closest MBTA Station</h2>
+<h2>Due: Thursday, October 18th</h2>
+
+<p class="note">This assignment is worth 15 points.  You must work on this assignment individually.</p>
+
+<h2>Overview</h2>
+<p>Over the next three weeks, you will create a web page (with a server) that shows all the MBTA (Massachusetts Bay Transportation Authority) Red Line subway train stations on a map and each station's real-time schedule of upcoming trains.  If you are not familiar with the MBTA subway system, the Red Line can be seen at <a href="https://www.mbta.com/schedules/Red/line" target="_blank">https://www.mbta.com/schedules/Red/line</a>.  The MBTA also provides APIs providing real-time data on subway schedules, bus schedules, and alerts for developers to use: see <a href="https://www.mbta.com/developers" target="_blank">https://www.mbta.com/developers</a>.</p>
+
+<p>It is important to note that instructions for this assignment may be deliberately vague at times.  You are expected to ask questions if you are confused or not sure about something as in the professional world.  There will also be opportunities to go beyond expectations especially for those who feel they have mastered the material.</p>
+
+<h2>Instructions</h2>
+<p>The following is a table of all the MBTA Red Line subway stations and their geolocations:</p>
+<pre>
+     stop_name     |  stop_lat   |      stop_lon      |   stop_id   
+-------------------+-------------+--------------------+-------------
+ South Station     |   42.352271 | -71.05524200000001 | place-sstat
+ Andrew            |   42.330154 |         -71.057655 | place-andrw
+ Porter Square     |     42.3884 | -71.11914899999999 | place-portr
+ Harvard Square    |   42.373362 |         -71.118956 | place-harsq
+ JFK/UMass         |   42.320685 |         -71.052391 | place-jfk
+ Savin Hill        |    42.31129 |         -71.053331 | place-shmnl
+ Park Street       | 42.35639457 |        -71.0624242 | place-pktrm
+ Broadway          |   42.342622 |         -71.056967 | place-brdwy
+ North Quincy      |   42.275275 |         -71.029583 | place-nqncy
+ Shawmut           | 42.29312583 | -71.06573796000001 | place-smmnl
+ Davis             |    42.39674 |         -71.121815 | place-davis
+ Alewife           |   42.395428 |         -71.142483 | place-alfcl
+ Kendall/MIT       | 42.36249079 |       -71.08617653 | place-knncl
+ Charles/MGH       |   42.361166 |         -71.070628 | place-chmnl
+ Downtown Crossing |   42.355518 |         -71.060225 | place-dwnxg
+ Quincy Center     |   42.251809 |         -71.005409 | place-qnctr
+ Quincy Adams      |   42.233391 |         -71.007153 | place-qamnl
+ Ashmont           |   42.284652 | -71.06448899999999 | place-asmnl
+ Wollaston         |  42.2665139 |        -71.0203369 | place-wlsta
+ Fields Corner     |   42.300093 |         -71.061667 | place-fldcr
+ Central Square    |   42.365486 |         -71.103802 | place-cntsq
+ Braintree         |  42.2078543 |        -71.0011385 | place-brntn
+</pre>
+
+<p>Create a page (named <code>index.html</code>) that displays a Google Map of all the MBTA Red Line subway stations.  Requirements:</p>
+
+<ul>
+	<li>The map shall take up the entire page.</li>
+	<li>Each station on the map shall be a marker with an icon: use the same icon image for each marker.  The Google Maps default red marker pin is not good enough.</li>
+	<li>For now, the map shall be centered on South Station.</li>
+	<li>Render a red polyline connecting each station, thus showing the complete Red Line on the map.  Please note that the Red Line forks at JFK/UMass Station: see <a href="https://www.mbta.com/schedules/Red/line" target="_blank">https://www.mbta.com/schedules/Red/line</a></li>
+	<li>A CSS file is required in order for the Google Map to even work.</li>
+	<li>Each subway station and it's corresponding location can be hard-coded in JavaScript.</li>
+	<li>Use a separate file for the JavaScript.  Do not mix JavaScript in the HTML file with the exception of the script tag to include the JavaScript file.</li>
+	<li>Determine your geolocation (geographic latitude and longitude) using the JavaScript <code>navigator.geolocation</code> object. Upon determining your geolocation, place a marker of where you are on the map.  The icon of the marker must be different than icon used for each MBTA subway station (it can be the default red pin Google uses).</li>
+	<li>The map shall be centered on your location.</li>
+	<li>Upon clicking on your marker on the map, display an information window (a.k.a., infowindow) noting the closest MBTA Red Line subway station from where you are including the distance away in miles.</li>
+	<li>Render a polyline (any color) that connects "your" marker to the marker of the closest MBTA Red Line subway station.</li>
+	<li>Upon clicking on a MBTA Red Line subway station marker, display an infowindow of the schedule of upcoming trains for that station.  Use JSON API of Red Line trains that I provide (see more details below).</li>
+</ul>
+
+<p>The required files for this part of the assignment: <code>index.html</code>, one CSS file, one JavaScript file, the <code>README</code> (more details on <code>README</code> below).</p>
+<p class="note">You are not allowed to use jQuery or any JavaScript front-end framework for this assignment.</p>
+
+<h2>Getting Started</h2>
+<ol>
+<li>Create a new folder named <code>mbta</code> in your folder <code>comp20-XXXXX</code> on your computer, the one you have been using since the <a href="lab-responsive.html">responsive design lab</a>.</li>
+<li>Follow the Google Maps JavaScript API tutorial "Getting Started" at <a href="https://developers.google.com/maps/documentation/javascript/tutorial" target="_blank">https://developers.google.com/maps/documentation/javascript/tutorial</a>.</li>
+</ol>
+
+<h2>The JSON API for Schedule of Upcoming Trains for an MBTA Red Line Subway Station</h2>
+<p>The JSON API is <code>https://chicken-of-the-sea.herokuapp.com/redline/schedule.json?stop_id=[STOP_ID_HERE]</code></p>
+
+<p>This is a real-time schedule of upcoming trains for a given Red Line station via <code>stop_id</code>.  Provided a legitimate <code>stop_id</code>, JSON of schedule of the next 10 subway trains for given station (arriving or departing) will be returned.</p>
+
+<p>Example, Davis Square Station where its corresponding <code>stop_id</code> is <code>place-davis</code>: executing an HTTP GET request <code>https://chicken-of-the-sea.herokuapp.com/redline/schedule.json?stop_id=place-davis</code> will return JSON of the following like:</p>
+
+<p><code>{"data":[{"attributes":{"arrival_time":"2018-05-24T23:02:22-04:00","departure_time":"2018-05-24T23:02:22-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":10,"track":null},"id":"prediction-36491863-L-70063-10","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70063","type":"stop"}},"trip":{"data":{"id":"36491863-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:02:22-04:00","departure_time":"2018-05-24T23:02:22-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":210,"track":null},"id":"prediction-36491868-L-70064-210","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70064","type":"stop"}},"trip":{"data":{"id":"36491868-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:08:36-04:00","departure_time":"2018-05-24T23:08:36-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":210,"track":null},"id":"prediction-36491822-L-70064-210","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70064","type":"stop"}},"trip":{"data":{"id":"36491822-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:12:40-04:00","departure_time":"2018-05-24T23:12:40-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":10,"track":null},"id":"prediction-36491784-L-70063-10","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70063","type":"stop"}},"trip":{"data":{"id":"36491784-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:14:18-04:00","departure_time":"2018-05-24T23:14:18-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":210,"track":null},"id":"prediction-36491818-L-70064-210","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70064","type":"stop"}},"trip":{"data":{"id":"36491818-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:16:40-04:00","departure_time":"2018-05-24T23:16:40-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":10,"track":null},"id":"prediction-36491867-L-70063-10","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70063","type":"stop"}},"trip":{"data":{"id":"36491867-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:20:30-04:00","departure_time":"2018-05-24T23:20:30-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":210,"track":null},"id":"prediction-36491829-L-70064-210","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70064","type":"stop"}},"trip":{"data":{"id":"36491829-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:22:54-04:00","departure_time":"2018-05-24T23:22:54-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":10,"track":null},"id":"prediction-36491821-L-70063-10","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70063","type":"stop"}},"trip":{"data":{"id":"36491821-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:23:18-04:00","departure_time":"2018-05-24T23:23:18-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":210,"track":null},"id":"prediction-36491815-L-70064-210","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70064","type":"stop"}},"trip":{"data":{"id":"36491815-L","type":"trip"}}},"type":"prediction"},{"attributes":{"arrival_time":"2018-05-24T23:28:36-04:00","departure_time":"2018-05-24T23:28:36-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":10,"track":null},"id":"prediction-36491811-L-70063-10","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70063","type":"stop"}},"trip":{"data":{"id":"36491811-L","type":"trip"}}},"type":"prediction"}],"jsonapi":{"version":"1.0"},"links":{"first":"https://api-v3.mbta.com/predictions?filter[route]=Red&filter[stop]=place-davis&page[limit]=10&page[offset]=0&sort=departure_time","last":"https://api-v3.mbta.com/predictions?filter[route]=Red&filter[stop]=place-davis&page[limit]=10&page[offset]=20&sort=departure_time","next":"https://api-v3.mbta.com/predictions?filter[route]=Red&filter[stop]=place-davis&page[limit]=10&page[offset]=10&sort=departure_time"}}</code></p>
+
+<p>For the MBTA Red Line, you can assume <code>direction_id = 0</code> means Southbound (to Ashmont/Braintree) and <code>direction_id = 1</code> means Northbound to Alewife.</p>
+
+<h2>Calulating the Distance Between Two Geopoints</h2>
+<p>There are two ways to calculate the distance between two geopoints, choose one:</p>
+<ol>
+<li>Use the classic Haversine Formula. The formula is provided and analyzed at <a href="http://www.movable-type.co.uk/scripts/latlong.html" target="_blank">http://www.movable-type.co.uk/scripts/latlong.html</a>.  Also, you are encouraged to use the JavaScript implementation of the Haversine Formula on Stasck Overflow but please do cite it in your <code>README.md</code> or in your code: <a href="https://stackoverflow.com/questions/14560999/using-the-haversine-formula-in-javascript" target="_blank">https://stackoverflow.com/questions/14560999/using-the-haversine-formula-in-javascript</a>.</li>
+<li>Use <code>google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);</code>.  See documentation at <a href="https://developers.google.com/maps/documentation/javascript/reference#spherical">https://developers.google.com/maps/documentation/javascript/reference#spherical</a></li>
+</ol>
+<p>Remember, the distance must be in <strong>miles</strong>, not meters.</p>
+
+<h2>Testing Your Work</h2>
+<p>For this part of the lab, you can open the <code>index.html</code> page on a web browser.  However, it is bad practice as you will see in this course (see lab 6).  Another way to serve your page locally is to run Python's simple HTTP server in the folder of your work.  That is:</p>
+<p><code>% cd comp20-XXXXX/mbta; # where XXXXX is the name of your private GitHub repository<br/>% python -m SimpleHTTPServer<br/></code></p>
+<p>By default, a simple web server will open up on port 8000.  Go to <code>http://localhost:8000/</code> on your favorite web browser to test your work.</p>
+<p class="note">Do not serve your work via the <code>gh-pages</code> branch of your private GitHub repository.</p>
+
+<h2>The <code>README</code> File</h2>
+<p>Every assignment shall include a <code>README</code> file that describes the work. This description must:</p>
+<ol>
+<li>Identify what aspects of the work have been correctly implemented and what have not.</li>
+<li>Identify anyone with whom you have collaborated or discussed the assignment.</li>
+<li>Say approximately how many hours you have spent completing the assignment.</li>
+<li>Be written in either text format (thus <code>README.txt</code>) or ideally in Markdown (thus <code>README.md</code>). File extension is necessary.  No other formats will be accepted.</li>
+</ol>
+<p>This <code>README.md</code> file must be directly in the folder of the lab or assignment.</p>
+
+<h2>Submitting the Assignment</h2>
+<p>Push all your changes to the private repository in GitHub that I created for you in a folder named <code>mbta</code> under the <code>master</code> branch. Say that your private repository in GitHub is named <code>comp20-mchow</code>, make sure all the files are pushed to <code>comp20-mchow/mbta</code>.</p>
+
+<h2>Assessment</h2>
+<p>This assignment is worth 15 points:</p>
+<ul>
+<li>(1 point) <code>README.md</code></li>
+<li>(1 point) The basics (proper repository folder name, 1 CSS file, map on entire page, separate file for JavaScript)</li>
+<li>(1 point) All the MBTA Red Line subway stations are marked on the map</li>
+<li>(1 point) Each station on the map shall be a marker with an icon: use the same icon image for each marker</li>
+<li>(2 points) Render a red polyline connecting each station, thus showing the complete Red Line on the map</li>
+<li>(2 points) Determine and mark your location on the map</li>
+<li>(2 points) Note the closest MBTA Red Line subway station from where you are (e.g., upon clicking on marker of where you are)</li>
+<li>(1 point) Polyline connecting your marker to the closest MBTA Red Line subway station</li>
+<li>(4 points) Upon clicking on a MBTA Red Line subway station marker, display an infowindow of the schedule of upcoming trains for that station</li>
+<li>(-5 points) Nonsense Git commit messages or did not commit much.</li>
+<li>(-6 points) Programming errors and <code>console.log()</code> outputs exist in JavaScript console (warnings acceptable).</li>
+<li>(-15 points) You used jQuery.</li>
+</ul>
+
+</body>
+</html>
