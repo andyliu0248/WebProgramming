@@ -165,8 +165,9 @@
 * This week: asynchronous, limitations of JavaScript
 * First things first: JSON --Data exchange format (think text file).  JSON is string, NOT JavaScript objects.
 * Why JSON?
+
 * So far, you have only worked with synchronous communications. Problem: slow, linear, "locking", not smooth
-* The bigger idea: asynchronous communications.  Where it is used: events
+* The bigger idea: asynchronous communications.  Where it is used: events, online education
 * (Recall) example: Twitter timeline.  Take a look at number of requests made _after page is loaded_
 * Another real example: email in the past vs Gmail
 * Are async and events the same? No. Are they related? Yes --almost all event handling functions are asynchronous.
