@@ -170,9 +170,6 @@
 * The bigger idea: asynchronous communications.  Where it is used: events, online education
 * (Recall) example: Twitter timeline.  Take a look at number of requests made _after page is loaded_
 * Another real example: email in the past vs Gmail
-* Are async and events the same? No. Are they related? Yes --almost all event handling functions are asynchronous.
-  - Asynchronous: "where data can be transmitted intermittently rather than in a steady stream"; not going at the same rate
-  - Are they the same? No. Are they related? Yes --almost all event handling functions are asynchronous.
 * The idea of XMLHttpRequest => make a request to a server-side script to get data, manage the response
 * XHR key methods and attributes: `open()`, `send()`, `onreadystatechange`, `status`, `readyState`, `responseText`
 * The data that now typically get back in the `responseText`: JSON
@@ -186,4 +183,15 @@
     - 3 => The request is in process
     - 4 => The request is complete
 * Parsing the JSON data
+
+# Tuesday, October 16th
+* Meet teammates for semester group project
+* Last class: XMLHttpRequest
+* The idea of XMLHttpRequest => make a request to a server-side script to get data, manage the response
+* XHR key methods and attributes: `open()`, `send()`, `onreadystatechange`, `status`, `readyState`, `responseText`
 * Is checking for readyState 4 good enough?  NO!
+* Are async and events the same? No. Are they related? Yes --almost all event handling functions are asynchronous.
+  - Asynchronous: "where data can be transmitted intermittently rather than in a steady stream"; not going at the same rate
+  - Are they the same? No. Are they related? Yes --almost all event handling functions are asynchronous.
+* navigator.geolocation
+* Midsemester course evaluation
