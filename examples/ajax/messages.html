@@ -6,37 +6,45 @@
 	<meta charset="utf-8"/>
 	<script>
 		function loadMessages() {
-			console.log("Start of loadMessages");
-			// Step 1: Create instance of XMLHttpRequest
+			/* Step 1: Make instance of XHR object...
+			...to make HTTP request after page is loaded*/
 			request = new XMLHttpRequest();
+			console.log("Hit me 1");
 
-			// Step 2: Set up an HTTP request
+			// Step 2: Open the JSON file at remote location
 			request.open("GET", "https://messagehub.herokuapp.com/messages.json", true);
+			console.log("Hit me 2");
 
-			// Step 3: Set up to handle the HTTP response
+			// Step 3: set up callback for when HTTP response is returned (i.e., you get the JSON file back)
 			request.onreadystatechange = function() {
-				// Request is done and got a response back
-				if (request.readyState == 4 && request.status == 200) {
-					outputDiv = document.getElementById("messages");
-					
-					// Step 5: Work with the response data
-					theString = request.responseText;				
+				console.log("Hit me 3");
 
-					// Step 5A: Parse the responseText to JavaScript objects
-					messages = JSON.parse(theString);
-					outputString = "";
-					for (count = 0; count < messages.length; count++) {
-						outputString += "<p>" + messages[count].content + " was written by " + messages[count].username + "</p>"
+				if (request.readyState == 4 && request.status == 200) {
+					// Step 5: when we get all the JSON data back, parse it and use it
+					theData = request.responseText;
+					messages = JSON.parse(theData);
+					returnHTML = "<ul>";
+					for (i = 0; i < messages.length; i++) {
+						returnHTML += "<li>" + messages[i].content + " by " + messages[i].username + 
+						"</li>";
 					}
-					outputDiv.innerHTML = outputString;
+					returnHTML += "</ul>";
+					document.getElementById("messages").innerHTML =returnHTML;
 
 				}
-			};
+				else if (request.readyState == 4 && request.status != 200) {
+					document.getElementById("messages").innerHTML = "Whoops, something went terribly wrong!";
+				}
+				else if (request.readyState == 3) {
+					document.getElementById("messages").innerHTML = "Come back soon!";
+				}
 
-			// Step 4: Execute / send the request
-			console.log("Before request.send()");
+			}
+
+			// Step 4: fire off the HTTP request
 			request.send();
-			console.log("After request.send()");
+			console.log("Hit me 4");
+
 		}
 	</script>
 </head>
