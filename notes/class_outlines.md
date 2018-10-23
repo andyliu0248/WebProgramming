@@ -195,7 +195,7 @@
   - Are they the same? No. Are they related? Yes --almost all event handling functions are asynchronous.
 * navigator.geolocation
 
-# Thursday, October 18th: jQuery
+# Thursday, October 18th: Tradeoffs
 * Jessica Wang and Google Cloud
 * Props to Josh Simani, engineering decision (trade-offs) in Assignment 2
 * Caveats with XMLHttpRequest and one of the limitations of client-side JavaScript
@@ -212,6 +212,8 @@
     - Storage constraints (e.g., cookies, local storage)
     - Security issues (e.g., same origin policy)
     - View source
+
+# Tuesday, October 22nd: jQuery
 * jQuery examples
 * What's the point of jQuery?
   - Write shorter code
