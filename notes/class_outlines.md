@@ -223,3 +223,20 @@
   - How $() works => DOM
   - How $.ajax, $.get, $.post all work => XHR
 * Midsemester course evaluation
+
+# Thursday, October 25th: Persistence with Cookies and Local Storage
+* How I designed Assignment 2
+  - Your responsibility to deal with errors
+  - Some flexibility
+  - Some open-endedness, force you to ask questions
+  - More than one acceptable way to solve the problem, deal with engineering tradeoffs
+  - Opportunities for the future
+* The point of lab 6...
+* Today: storing data over time
+* What can't we do, knowing the limitations of client-side JavaScript.
+* What we have learned so far in this course: key-value pairs
+* Two basic storage mechanisms on the client-side: cookies, local storage
+* Cookies: 4 KB max, there is a max number of cookies per domain
+* Local storage: ~5 MB per domain
+* The finer point: both cookies are local storage are still bound by Same Origin Policy
+* Examples
