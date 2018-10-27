@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
+<link rel="stylesheet" href="../stylesheets/style.css" />
+<title>COMP 20: Web Programming - Assignment 3</title>
+</head>
+
+<body>
+<h1>COMP 20: Web Programming</h1>
+<h2>Assignment 3: 2048 Game Center</h2>
+<h2>Due: Wednesday, November 14th</h2>
+
+<h2>Objectives</h2>
+<ul>
+<li>Develop a server-side web application using Heroku, Node.js, and the Express web framework.</li>
+<li>Enable and use Cross-Origin Resource Sharing (CORS).</li>
+<li>Read and write data to a MongoDB database.</li>
+<li>Build JSON-based APIs.</li>
+<li>Read and extend an open source project (i.e., someone else's work).</li>
+</ul>
+
+<h2>Overview</h2>
+<p>I hope you've had a chance to play Gabriele Cirulli's addictive game <a href="http://gabrielecirulli.github.io/2048/" target="_blank">2048</a>.  The official version at <a href="http://gabrielecirulli.github.io/2048/" target="_blank">http://gabrielecirulli.github.io/2048/</a>.  The game can be played on most web browsers, including mobile web browsers.  Source code repository is available at <a href="https://github.com/gabrielecirulli/2048" target="_blank">https://github.com/gabrielecirulli/2048</a>.  You can clone the repository onto your computer and open the <code>index.html</code> file to play the game. Currently as of this writing, only the best score is stored in local storage.  The game does not maintain a history of all your final scores and/or other players' scores, including the final grids when game is terminated.  If you have ever played <a href="http://asherv.com/threes/" target="_blank">Threes</a> on iOS or Android, you will notice that after the game is over, you will see a list of your best scores including what the final board looked like.  If you want to store your and other players' final scores and grids over a long period of time, storing the data locally is not the way to go.</p>
+
+<p>Using Heroku, Node.js with the Express web framework, and MongoDB, you are to build a web application that maintains final scores and grids for all your and other players' 2048 games for a long period of time.</p>
+
+<h2>Data Description</h2>
+<p>Your web application shall only work with one set of data: <code>scores</code>.  In MongoDB, a set of data is known as a <span class="stress">collection</span> (hence, collection is named <code>scores</code>).  If you are familiar with relational databases, a collection is analogous to a "table".  The collection contains a number of records, properly known as <span class="stress">documents</span>. If you are familiar with relational databases, a document is analogous to a "row".</p>
+<p>The data, with corresponding data type, that must be stored in one document (or record) are:</p>
+<ul>
+<li><code>username</code> (must be a string) - Name of player for the game</li>
+<li><code>score</code> (must be a number) - The player's score</li>
+<li><code>grid</code> (must be JSON format) - The final grid when game is terminated</li>
+<li><code>created_at</code> (a timestamp) - Timestamp when new document was created, entered into database</li>
+</ul>
+
+<p>Each document will have the data field <code>_id</code> (the document's unique field, primary key) created automatically.</li>
+
+<h2>Requirements</h2>
+<p>Your web application shall have the following three routes (or interfaces):</p>
+<ol>
+<li>A <code>POST /submit</code> - Submits final score and grid for a terminated 2048 game --from any domain.  The mandatory fields and <span class="stress">exact field names</span> for submission to this API are <code>username</code>, <code>score</code>, and <code>grid</code>.  Successful submission of these three pieces of data shall result in one entry into the collection <code>scores</code> in MongoDB <em>and</em> returns a JSON array of objects of the top 10 scores in the game (among all players) sorted in descending order. <span class="note">If a submission is missing any one of the data fields, do not insert new record into the database!</span>  Cross-origin resource sharing must be enabled for this API, else a 2048 game from another domain cannot send score. See <a href="#post">example output below</a>.</li>
+<li>A <code>GET /scores.json</code> - Returns a JSON array of objects for a specified player with the scores sorted in descending order.  The mandatory query string parameter for this route is <code>username</code>.  If <code>username</code> is empty, return empty JSON array <code>[]</code>.  Example: <code>GET /scores.json?username=mchow</code> returns the scores in descending order for me.  See <a href="#get">example output below</a>.  Cross-origin resource sharing must be enabled for this API else a 2048 game from another domain cannot retrieve scores.</li>
+<li><code>GET /</code> - Home, the root, the index in HTML.  You may also use additional JavaScript and CSS, and you are free to design this page however you desire. Accessing this on a web browser shall display list of all the 2048 game scores for all players <em>sorted in descending order by score</em>.  Usernames and game timestamps must be displayed in addition to the score.  Simply outputting JSON is unacceptable. See <a href="#index">example output below</a>.</li>
+<li>Use of loops including <code>for</code> and <code>while</code> in both <code>POST /submit</code> and <code>GET /scores.json</code> is prohibited.</li>
+</ol>
+
+<h2>Security</h2>
+<p>Please note that I did not mention a thing about security or error handling in the requirements.  Authentication to this web application is not required.  There is a reason for this, as you will see in Assignment 4.</p>
+
+<h2>Getting Started</h2>
+<ol>
+<li class="note">Please do not create and work on this assignment directly in your private GitHub repository as you will have a Git repo inside of a Git repo.  Your work will not be pushed to GitHub correctly if you do this. See "Submitting the Assignment."</li>
+<li>Clone the official 2048 game repository onto your workstation, somewhere outside of your private GitHub repository via <code>git clone https://github.com/gabrielecirulli/2048.git</code></li>
+<li>Play the game via opening up the <code>index.html</code> file on a web browser</li>
+<li>Figure out how are the score and grid are stored (in what object). Determine how and when the game is terminated.</li>
+<li>Proceed to write your web application using Node.js.  You can use the same repository that you used in <a href="lab-nodejsheroku.html">Lab 8</a> for this assignment.</li>
+</ol>
+
+<h2>Modifying the 2048 Game Client</h2>
+<p>Modify the 2048 game so that username, final score, and grid are sent to your web application that is served via Heroku when a game is over.  You can choose to hardcode a username or prompt players to enter a username when game is over.  The latter method is recommended.  You are allowed to add and use client-side JavaScript libraries such as jQuery.  You can modify any of the JavaScript or HTML files in the game.</p>
+<p>Before submitting your assignment, make a copy of all the files you modified and files you added into a folder named <code>2048-changes</code> in your private GitHub repository (that you have been using for labs and for Assignment 2).  <span class="note">Do not move the entire <code>2048</code> game folder into your private GitHub repository else it will be grayed out in GitHub --that is, you will have a Git repository inside of a Git repository.</span></p>
+
+<h2>References</h2>
+<ol>
+<li><a href="https://expressjs.com/en/api.html" target="_blank">The Express web framework API reference (official)</a></li>
+<li><a href="https://github.com/tuftsdev/WebProgramming/tree/gh-pages/examples/nodejs/nodemongoapp">The <code>nodemongoapp</code> example I wrote</a></li>
+<li><a href="https://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-node-js" target="_blank">Node.js + Express + Cross-Domain Scripting (Stack Overflow)</a></li>
+<li><a href="https://docs.mongodb.org/getting-started/shell/#getting-started-with-mongodb-development" target="_blank">Getting Started with MongoDB Development (official)</a></li>
+<li><a href="lab-nodejsheroku.html">Lab 8</a></li>
+<li><a href="https://github.com/mongodb/node-mongodb-native" target="_blank">The Official MongoDB Node.JS Driver QUICK START</a></li>
+<li><a href="https://mongodb.github.io/node-mongodb-native/genindex.html" target="_blank">The Official MongoDB Node.JS Driver Documentation</a></li>
+</ol>
+
+
+<h2>Testing Your Web Application</h2>
+<ol>
+<li>Push and deploy your app to Heroku.</li>
+<li>Play modified version of 2048 game on your computer.</li>
+<li>After the game is over, enter in your name.  After entry, your name, score, and final grid should be sent to your server.</li>
+<li>Once the server records your name, score, and final grid, you should see a popup with top 10 highest scores ever who have played your modified version of 2048.</li>
+</ol>
+
+<h2>The <code>README</code> File</h2>
+<p>Modify the <code>README.md</code> file in <code>node-js-getting-started</code> that describes your modifications. This description must:</p>
+<ol>
+<li>Identify what aspects of the work have been correctly implemented and what have not.</li>
+<li>Identify anyone with whom you have collaborated or discussed the assignment.</li>
+<li>Say approximately how many hours you have spent completing the assignment.</li>
+</ol>
+
+<h2>Submitting the Assignment</h2>
+<ol>
+<li>Push and deploy your app to Heroku.</li>
+<li>It is expected that you will use the same web app / repo from <a href="lab-nodejsheroku.html">Lab 8</a> for this assignment.  If you are to create a new web app on Heroku for this assignment, you will need to add me as a collaborator (using my email address <code>mchow[AT]cs[DOT]tufts[DOT]edu</code>) for your web application in Heroku.  You can do this by logging on to Heroku, go to the dashboard for your web application, under "Access", click on the "Add collaborator" button, enter my email address, and click "Save changes".</li>
+<li>Add, commit, and push a copy of all the files you modified and added for the 2048 game client in a folder named <code>2048-changes</code> in your private GitHub repository (the same repository you have been using for labs and for Assignment 2).</li>
+</ol>
+
+<h2>Assessment</h2>
+<p>This assignment is worth 26 points.</p>
+<ul>
+<li>(1 point) The README</li>
+<li>(10 points) The <code>POST /submit</code> API as specified above</li>
+<li>(5 points) The <code>GET /scores.json</code> API as specified above</li>
+<li>(5 points) The index <code>GET /</code> as specified above</li>
+<li class="note">If I cannot access any of the APIs above or if anything results in "Application Error", you will receive NO CREDIT for that part.</li>
+<li>(5 points) Modifications to 2048 game client code to connect with your game server</li>
+</ul>
+
+<h2>Example Output</h2>
+<ol>
+	<li id="post">For <code>POST /submit</code>: <code>[{"_id":"5bd4e428e9bf280004cb6c7a","username":"Ming","score":3440,"grid":"{\"size\":4,\"cells\":[[{\"x\":0,\"y\":0,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":0},\"mergedFrom\":null},{\"x\":0,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":1},\"mergedFrom\":null},{\"x\":0,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":2},\"mergedFrom\":null},{\"x\":0,\"y\":3,\"value\":2,\"previousPosition\":null,\"mergedFrom\":null}],[{\"x\":1,\"y\":0,\"value\":2,\"previousPosition\":{\"x\":1,\"y\":0},\"mergedFrom\":null},{\"x\":1,\"y\":1,\"value\":32,\"previousPosition\":{\"x\":1,\"y\":1},\"mergedFrom\":null},{\"x\":1,\"y\":2,\"value\":64,\"previousPosition\":{\"x\":1,\"y\":2},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":4,\"previousPosition\":null,\"mergedFrom\":[{\"x\":1,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":3},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":1,\"y\":3},\"mergedFrom\":null}]}],[{\"x\":2,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":2,\"y\":0},\"mergedFrom\":null},{\"x\":2,\"y\":1,\"value\":256,\"previousPosition\":{\"x\":2,\"y\":1},\"mergedFrom\":null},{\"x\":2,\"y\":2,\"value\":128,\"previousPosition\":{\"x\":2,\"y\":2},\"mergedFrom\":null},{\"x\":2,\"y\":3,\"value\":16,\"previousPosition\":{\"x\":2,\"y\":3},\"mergedFrom\":null}],[{\"x\":3,\"y\":0,\"value\":32,\"previousPosition\":{\"x\":3,\"y\":0},\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":64,\"previousPosition\":{\"x\":3,\"y\":1},\"mergedFrom\":null},{\"x\":3,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":3,\"y\":2},\"mergedFrom\":null},{\"x\":3,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":3,\"y\":3},\"mergedFrom\":null}]]}","created_at":"2018-10-27T22:18:16.795Z"},{"_id":"5bd4d2db9f6f190004d3a32c","username":"Some Rando","score":964,"grid":"{\"size\":4,\"cells\":[[{\"x\":0,\"y\":0,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":0},\"mergedFrom\":null},{\"x\":0,\"y\":1,\"value\":32,\"previousPosition\":{\"x\":0,\"y\":1},\"mergedFrom\":null},{\"x\":0,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":2},\"mergedFrom\":null},{\"x\":0,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":0,\"y\":3},\"mergedFrom\":null}],[{\"x\":1,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":1,\"y\":0},\"mergedFrom\":null},{\"x\":1,\"y\":1,\"value\":64,\"previousPosition\":{\"x\":1,\"y\":1},\"mergedFrom\":null},{\"x\":1,\"y\":2,\"value\":4,\"previousPosition\":{\"x\":1,\"y\":2},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":8,\"previousPosition\":{\"x\":1,\"y\":3},\"mergedFrom\":null}],[{\"x\":2,\"y\":0,\"value\":64,\"previousPosition\":{\"x\":2,\"y\":0},\"mergedFrom\":null},{\"x\":2,\"y\":1,\"value\":16,\"previousPosition\":{\"x\":2,\"y\":1},\"mergedFrom\":null},{\"x\":2,\"y\":2,\"value\":32,\"previousPosition\":{\"x\":2,\"y\":2},\"mergedFrom\":null},{\"x\":2,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":2,\"y\":3},\"mergedFrom\":null}],[{\"x\":3,\"y\":0,\"value\":2,\"previousPosition\":null,\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":4,\"previousPosition\":null,\"mergedFrom\":[{\"x\":3,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":0},\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":1},\"mergedFrom\":null}]},{\"x\":3,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":3,\"y\":2},\"mergedFrom\":null},{\"x\":3,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":3},\"mergedFrom\":null}]]}","created_at":"2018-10-27T21:04:27.093Z"},{"_id":"5bd4d2399f6f190004d3a32b","username":"Ming","score":864,"grid":"{\"size\":4,\"cells\":[[{\"x\":0,\"y\":0,\"value\":64,\"previousPosition\":{\"x\":0,\"y\":0},\"mergedFrom\":null},{\"x\":0,\"y\":1,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":1},\"mergedFrom\":null},{\"x\":0,\"y\":2,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":2},\"mergedFrom\":null},{\"x\":0,\"y\":3,\"value\":4,\"previousPosition\":null,\"mergedFrom\":null}],[{\"x\":1,\"y\":0,\"value\":8,\"previousPosition\":{\"x\":1,\"y\":0},\"mergedFrom\":null},{\"x\":1,\"y\":1,\"value\":64,\"previousPosition\":{\"x\":1,\"y\":1},\"mergedFrom\":null},{\"x\":1,\"y\":2,\"value\":4,\"previousPosition\":{\"x\":1,\"y\":2},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":3},\"mergedFrom\":null}],[{\"x\":2,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":2,\"y\":0},\"mergedFrom\":null},{\"x\":2,\"y\":1,\"value\":32,\"previousPosition\":{\"x\":2,\"y\":1},\"mergedFrom\":null},{\"x\":2,\"y\":2,\"value\":16,\"previousPosition\":{\"x\":2,\"y\":2},\"mergedFrom\":null},{\"x\":2,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":2,\"y\":3},\"mergedFrom\":null}],[{\"x\":3,\"y\":0,\"value\":8,\"previousPosition\":{\"x\":3,\"y\":0},\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":4,\"previousPosition\":{\"x\":3,\"y\":1},\"mergedFrom\":null},{\"x\":3,\"y\":2,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":2},\"mergedFrom\":null},{\"x\":3,\"y\":3,\"value\":8,\"previousPosition\":{\"x\":3,\"y\":3},\"mergedFrom\":null}]]}","created_at":"2018-10-27T21:01:45.771Z"},{"_id":"5bd4d1119f6f190004d3a32a","username":"Ming","score":576,"grid":"{\"size\":4,\"cells\":[[{\"x\":0,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":0,\"y\":0},\"mergedFrom\":null},{\"x\":0,\"y\":1,\"value\":16,\"previousPosition\":{\"x\":0,\"y\":1},\"mergedFrom\":null},{\"x\":0,\"y\":2,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":2},\"mergedFrom\":null},{\"x\":0,\"y\":3,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":3},\"mergedFrom\":null}],[{\"x\":1,\"y\":0,\"value\":2,\"previousPosition\":{\"x\":1,\"y\":0},\"mergedFrom\":null},{\"x\":1,\"y\":1,\"value\":4,\"previousPosition\":{\"x\":1,\"y\":1},\"mergedFrom\":null},{\"x\":1,\"y\":2,\"value\":32,\"previousPosition\":{\"x\":1,\"y\":2},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":1,\"y\":3},\"mergedFrom\":null}],[{\"x\":2,\"y\":0,\"value\":8,\"previousPosition\":{\"x\":2,\"y\":0},\"mergedFrom\":null},{\"x\":2,\"y\":1,\"value\":16,\"previousPosition\":{\"x\":2,\"y\":1},\"mergedFrom\":null},{\"x\":2,\"y\":2,\"value\":64,\"previousPosition\":{\"x\":2,\"y\":2},\"mergedFrom\":null},{\"x\":2,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":2,\"y\":3},\"mergedFrom\":null}],[{\"x\":3,\"y\":0,\"value\":2,\"previousPosition\":null,\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":4,\"previousPosition\":null,\"mergedFrom\":[{\"x\":3,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":0},\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":1},\"mergedFrom\":null}]},{\"x\":3,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":3,\"y\":2},\"mergedFrom\":null},{\"x\":3,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":3,\"y\":3},\"mergedFrom\":null}]]}","created_at":"2018-10-27T20:56:49.797Z"},{"_id":"5bd3f0c0e987130004716a5c","username":"Bobo","score":20,"grid":"{}","created_at":"2018-10-27T04:59:44.421Z"},{"_id":"5bd3f05659f530000484ba0d","username":"Bobo","score":12,"grid":"{}","created_at":"2018-10-27T04:57:58.016Z"},{"_id":"5bd3f05759f530000484ba0e","username":"Bobo","score":12,"grid":"{}","created_at":"2018-10-27T04:57:59.911Z"},{"_id":"5bcc17d54f55560004d0d7c8","username":"ming","score":10,"grid":"{}","created_at":"2018-10-21T06:08:21.910Z"},{"_id":"5bd3f153e987130004716a5d","username":"Bobo","score":2,"grid":"{}","created_at":"2018-10-27T05:02:11.259Z"},{"_id":"5bd4ecc2bdc8ed0004bf46d6","username":"mchow","score":0,"grid":"{}","created_at":"2018-10-27T22:54:58.611Z"}]</code></li>
+	<li id="get">For <code>GET /scores.json</code>: <code>
+[{"username":"mchow","score":1344,"grid":"{\"size\":4,\"cells\":[[{\"x\":0,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":0,\"y\":0},\"mergedFrom\":null},{\"x\":0,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":1},\"mergedFrom\":null},{\"x\":0,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":2},\"mergedFrom\":null},{\"x\":0,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":0,\"y\":3},\"mergedFrom\":null}],[{\"x\":1,\"y\":0,\"value\":8,\"previousPosition\":{\"x\":1,\"y\":0},\"mergedFrom\":null},{\"x\":1,\"y\":1,\"value\":16,\"previousPosition\":{\"x\":1,\"y\":1},\"mergedFrom\":null},{\"x\":1,\"y\":2,\"value\":32,\"previousPosition\":{\"x\":1,\"y\":2},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":8,\"previousPosition\":{\"x\":2,\"y\":3},\"mergedFrom\":null}],[{\"x\":2,\"y\":0,\"value\":64,\"previousPosition\":{\"x\":2,\"y\":0},\"mergedFrom\":null},{\"x\":2,\"y\":1,\"value\":128,\"previousPosition\":{\"x\":2,\"y\":1},\"mergedFrom\":null},{\"x\":2,\"y\":2,\"value\":16,\"previousPosition\":{\"x\":2,\"y\":2},\"mergedFrom\":null},{\"x\":2,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":3,\"y\":3},\"mergedFrom\":null}],[{\"x\":3,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":3,\"y\":0},\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":1},\"mergedFrom\":null},{\"x\":3,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":3,\"y\":2},\"mergedFrom\":null},{\"x\":3,\"y\":3,\"value\":2,\"previousPosition\":null,\"mergedFrom\":null}]]}","created_at":"Tue Oct 31 2018 03:02:07 GMT+0000 (UTC)","_id":"5330f1afa83141020034d9a2"},{"username":"mchow","score":988,"grid":"{\"size\":4,\"cells\":[[{\"x\":0,\"y\":0,\"value\":4,\"previousPosition\":{\"x\":0,\"y\":0},\"mergedFrom\":null},{\"x\":0,\"y\":1,\"value\":32,\"previousPosition\":{\"x\":0,\"y\":1},\"mergedFrom\":null},{\"x\":0,\"y\":2,\"value\":8,\"previousPosition\":{\"x\":0,\"y\":2},\"mergedFrom\":null},{\"x\":0,\"y\":3,\"value\":2,\"previousPosition\":null,\"mergedFrom\":null}],[{\"x\":1,\"y\":0,\"value\":16,\"previousPosition\":{\"x\":1,\"y\":0},\"mergedFrom\":null},{\"x\":1,\"y\":1,\"value\":64,\"previousPosition\":{\"x\":1,\"y\":1},\"mergedFrom\":null},{\"x\":1,\"y\":2,\"value\":32,\"previousPosition\":{\"x\":1,\"y\":2},\"mergedFrom\":null},{\"x\":1,\"y\":3,\"value\":4,\"previousPosition\":{\"x\":0,\"y\":3},\"mergedFrom\":null}],[{\"x\":2,\"y\":0,\"value\":64,\"previousPosition\":{\"x\":2,\"y\":0},\"mergedFrom\":null},{\"x\":2,\"y\":1,\"value\":8,\"previousPosition\":{\"x\":2,\"y\":1},\"mergedFrom\":null},{\"x\":2,\"y\":2,\"value\":2,\"previousPosition\":{\"x\":2,\"y\":2},\"mergedFrom\":null},{\"x\":2,\"y\":3,\"value\":8,\"previousPosition\":{\"x\":1,\"y\":3},\"mergedFrom\":null}],[{\"x\":3,\"y\":0,\"value\":16,\"previousPosition\":{\"x\":3,\"y\":0},\"mergedFrom\":null},{\"x\":3,\"y\":1,\"value\":2,\"previousPosition\":{\"x\":3,\"y\":1},\"mergedFrom\":null},{\"x\":3,\"y\":2,\"value\":4,\"previousPosition\":{\"x\":3,\"y\":2},\"mergedFrom\":null},{\"x\":3,\"y\":3,\"value\":2,\"previousPosition\":{\"x\":2,\"y\":3},\"mergedFrom\":null}]]}","created_at":"Tue Oct 31 2018 03:03:52 GMT+0000 (UTC)","_id":"5330f2185f6efb02001866fd"}]</code></li>
+	<li id="index">For <code>GET /</code>: <img src="2048-gamecenter.png" alt="2048 game center"/></li>
+</ol>
+
+</body>
+</html>
