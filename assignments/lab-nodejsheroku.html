@@ -62,7 +62,7 @@
 <blockquote><code>[]</code></blockquote>
 
 <p>(that is, a hard-coded JSON that is an empty list)</p>
-<p><span class="note">Important: Cross-Origin Resource Sharing must be enabled for <code>GET /scores.json</code></p>
+<p><span class="note">Important: Cross-Origin Resource Sharing must be enabled for <code>GET /scores.json</code></span></p>
 
 <h3>For <code>POST /submit</code></h3>
 <p>Accessing this route returns the following JSON as response:</p>
@@ -71,7 +71,7 @@
 
 <p>Accessing <code>https://[YOUR_APP_IDENTIFIER_RANDOMLY_GENERATED].herokuapp.com/submit</code> on a web browser will not work (recall Quiz 1 and how web browsers work).  However, if you make an HTTP POST request via <code>curl</code> and send it any data, anything (e.g., <code>curl --data "username=whocares" https://[YOUR_APP_IDENTIFIER_RANDOMLY_GENERATED].herokuapp.com/submit</code>), the JSON string above will be the response.</p>
 
-<p><span class="note">Important: Cross-Origin Resource Sharing must be enabled for <code>POST /submit</code></p>
+<p><span class="note">Important: Cross-Origin Resource Sharing must be enabled for <code>POST /submit</code></span></p>
 
 <p>For this part of the lab, you are allowed to use additional Node.js modules although you really do not need to.  You are strongly urged to continue building upon <code>node-js-getting-started</code> for your Assignment 3.  If you want to start a new repository on Heroku for your Assignment 3, you will also need to add me as a collaborator for that new Heroku app.</p>
 
