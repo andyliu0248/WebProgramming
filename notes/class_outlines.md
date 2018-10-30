@@ -265,6 +265,7 @@
   11. Be available all the time (well, almost)
 * Implementation 1 (ugly): Node.js => write server-side programs using JavaScript
 * Implementation 2 (cleaner using Express framework)
+* Assignment 3
   
 # Thursday, November 1st: Server-Side (continued), Frameworks
 * Last class: the server side, Node.js, Express
