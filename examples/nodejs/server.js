@@ -5,7 +5,8 @@ http.createServer(function(request, response) {
 	
 	var pathname = url.parse(request.url).pathname;
 	console.log("Request for " + pathname + " received.");
-
+	console.log(request.connection.remoteAddress);
+	
 	// Rips out HTTP GET query string
 	var query = url.parse(request.url).query;
 	console.log("Query " + query + " received.");

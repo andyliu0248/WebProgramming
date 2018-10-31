@@ -1,14 +1,12 @@
-// Taken from http://expressjs.com/4x/api.html
 var express = require('express');
 var app = express();
 
-/* Format
+/* HOW TO READ:
 
-app.HTTP_VERB('ROUTE_NAME', function(request, response) {
-	// do something...
-	// Send response back via `response.send();`
+app.HTTP_VERB('/ROUTE_NAME', function(request, response) {
+	// Do stuff here...
+	response.send("SOMETHING TO RESPONSE");	
 });
-
 */
 
 app.get('/', function(request, response) {
