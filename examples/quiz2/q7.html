@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>Hello Manish!</title>
+	<meta charset="utf-8"/>
+	<script>
+		var request = new XMLHttpRequest();
+		request.open("GET", "news.json", true);
+		request.onreadystatechange = funex;
+		request.send();
+		console.log("Feels the way I do, about you now");
+
+		function funex() {
+			if (request.readyState == 4) {
+				console.log("I don't believe that anybody");
+			}
+		}
+	</script>
+
+	<body>
+		<h1>Look at the JavaScript console...</h1>
+	</body>
+</head>
