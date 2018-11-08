@@ -21,7 +21,6 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 app.use(express.static(__dirname + '/public'));
 
 app.post('/feedme', function(request, response) {
-	console.log(request.body);
 	var foodItem = request.body.food;
 	//foodItem = foodItem.replace(/[^\w\s]/gi, ''); // remove all special characters.  Can you explain why this is important?
 	var toInsert = {
@@ -30,7 +29,6 @@ app.post('/feedme', function(request, response) {
 	db.collection('fooditems', function(error, coll) {
 		coll.insert(toInsert, function(error, saved) {
 			if (error) {
-				console.log("Error: " + error);
 				response.send(500);
 			}
 			else {
