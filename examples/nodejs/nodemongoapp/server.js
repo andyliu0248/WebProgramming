@@ -1,5 +1,4 @@
 var express = require('express');
-
 var bodyParser = require('body-parser'); // Required if we need to use HTTP post parameters
 var validator = require('validator'); // See documentation at https://github.com/chriso/validator.js
 var app = express();
@@ -10,11 +9,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // Required if we need to us
 
 // Mongo initialization and connect to database
 // process.env.MONGODB_URI is the default environment variable on Heroku for the MongoLab add-on
-// process.env.MONGOLAB_URI is the old environment variable on Heroku for the MongoLab add-on
-// process.env.MONGOHQ_URL is an environment variable on Heroku for the MongoHQ add-on
 // If environment variables not found, fall back to mongodb://localhost/nodemongoexample
-// nodemongoexample is the name of the database
-var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/nodemongoexample';
+// nodemongoexample is the name of the local database
+var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/nodemongoexample';
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
