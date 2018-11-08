@@ -17,9 +17,6 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
 });
 
-// Serve static content
-app.use(express.static(__dirname + '/public'));
-
 app.post('/feedme', function(request, response) {
 	var foodItem = request.body.food;
 	//foodItem = foodItem.replace(/[^\w\s]/gi, ''); // remove all special characters.  Can you explain why this is important?
