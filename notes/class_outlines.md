@@ -303,16 +303,11 @@
 * Example: https://github.com/tuftsdev/WebProgramming/tree/gh-pages/examples/nodejs/nodemongoapp.  Feel free to copy and use initialization code.  It will help you big time!
 
 # Tuesday, November 13th: Web Security, Part 1
-* To understand Assignment 3, draw it out
-* The "trivial" questions --or so you thought...
-* Finer point: data sent to a web server is always text!
 * Revisiting `nodemongoapp`
+* A trivial question: in the real world, people submit data via web form.  So...
 * There's something wrong with it. What if...
 * Cross-Site Scripting (XSS): what is it, why is it so bad, and where to attack?
 * https://www.veracode.com/security/xss
-
-# Thursday, November 15th: Web Security, Part 2 and Closing the Course
-* Last class: cross-site scripting (XSS) and web security 101
 * Awareness:
   1. OWASP Top 10 list: https://www.owasp.org/images/7/72/OWASP_Top_10-2017_%28en%29.pdf.pdf
   2. CWE/SANS TOP 25 Most Dangerous Software Errors: https://www.sans.org/top25-software-errors/
@@ -322,9 +317,10 @@
 * Bypassing client-side validation using a proxy
 * Case study: "How to buy a 65” Plasma for $.99" http://www.edgeblog.net/2006/how-to-buy-a-plasma-for-99/
 * The moral of the story...
+
+# Thursday, November 15th: Web Security, Part 2 and Closing the Course
 * Assignment 4
 * Hard-coded credentials: https://cwe.mitre.org/data/definitions/259.html
-
 * Database injection attack in MongoDB
 * What happened during spring break nearly two years ago:
 * "I’ve Just Liberated My Modules" https://medium.com/@azerbike/i-ve-just-liberated-my-modules-9045c06be67c#.aandh88ud. Discussion on Hacker News: https://news.ycombinator.com/item?id=11340510
