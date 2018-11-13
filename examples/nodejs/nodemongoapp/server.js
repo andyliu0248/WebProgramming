@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser'); // Required if we need to use HTTP post parameters
 var validator = require('validator'); // See documentation at https://github.com/chriso/validator.js
 var app = express();
+const path = require('path')
 // See https://stackoverflow.com/questions/5710358/how-to-get-post-query-in-express-node-js
 app.use(bodyParser.json());
 // See https://stackoverflow.com/questions/25471856/express-throws-error-as-body-parser-deprecated-undefined-extended
@@ -16,6 +17,9 @@ var MongoClient = require('mongodb').MongoClient, format = require('util').forma
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
 });
+
+// Serve static content in folder named "public"
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/feedme', function(request, response) {
 	var foodItem = request.body.food;
