@@ -313,12 +313,14 @@
   2. CWE/SANS TOP 25 Most Dangerous Software Errors: https://www.sans.org/top25-software-errors/
 * Defending against XSS (don't do this in Assignment 3)
 * How bad is this problem? https://www.elie.net/static/files/lessons-learned-while-protecting-gmail/lessons-learned-while-protecting-gmail.pdf
+
+# Thursday, November 15th: Web Security, Part 2 and Closing the Course
+* https://www.csoonline.com/article/3269028/malware/what-is-cross-site-scripting-xss-low-hanging-fruit-for-both-attackers-and-defenders.html
+* https://www.veracode.com/sites/default/files/Resources/Reports/state-of-software-security-focus-on-application-development.pdf
 * Playground: http://www.cs.tufts.edu/comp/20/hackme.php
 * Bypassing client-side validation using a proxy
 * Case study: "How to buy a 65” Plasma for $.99" http://www.edgeblog.net/2006/how-to-buy-a-plasma-for-99/
 * The moral of the story...
-
-# Thursday, November 15th: Web Security, Part 2 and Closing the Course
 * Assignment 4
 * Hard-coded credentials: https://cwe.mitre.org/data/definitions/259.html
 * Database injection attack in MongoDB
