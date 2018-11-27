@@ -314,20 +314,21 @@
 * Defending against XSS (don't do this in Assignment 3)
 * How bad is this problem? https://www.elie.net/static/files/lessons-learned-while-protecting-gmail/lessons-learned-while-protecting-gmail.pdf
 
-# Thursday, November 15th: Web Security, Part 2 and Closing the Course
+# Thursday, November 15th: Web Security, Part 2
 * https://www.csoonline.com/article/3269028/malware/what-is-cross-site-scripting-xss-low-hanging-fruit-for-both-attackers-and-defenders.html
 * https://www.veracode.com/sites/default/files/Resources/Reports/state-of-software-security-focus-on-application-development.pdf
+* Database injection attack in MongoDB
+
+# Tuesday, November 27th: Closing the Course
+* Hard-coded credentials: https://cwe.mitre.org/data/definitions/259.html
 * Playground: http://www.cs.tufts.edu/comp/20/hackme.php
 * Bypassing client-side validation using a proxy
 * Case study: "How to buy a 65” Plasma for $.99" http://www.edgeblog.net/2006/how-to-buy-a-plasma-for-99/
 * The moral of the story...
-* Assignment 4
-* Hard-coded credentials: https://cwe.mitre.org/data/definitions/259.html
-* Database injection attack in MongoDB
+* Closing the course
 * What happened during spring break nearly two years ago:
 * "I’ve Just Liberated My Modules" https://medium.com/@azerbike/i-ve-just-liberated-my-modules-9045c06be67c#.aandh88ud. Discussion on Hacker News: https://news.ycombinator.com/item?id=11340510
 * "NPM & left-pad: Have We Forgotten How To Program?" http://www.haneycodes.net/npm-left-pad-have-we-forgotten-how-to-program/. Discussion on Hacker News: https://news.ycombinator.com/item?id=11348798
-* Closing the course
 * No slides necessary for a lightning talk
 * Some reads on how to give a good lightning talk:
   - http://www.perl.com/pub/2004/07/30/lightningtalk.html
