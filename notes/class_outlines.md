@@ -342,3 +342,10 @@
   - The Cyber Security Education problem
   - "our CEO Tony’s greatest dissatisfaction many engineering new grads, as is not just the lack of preparation, but the seeming disinterest to chase down that very understanding."
 * What's the point --of everything? https://github.com/alex/what-happens-when
+
+# Thursday, November 29th
+* What's the point of semester group project?
+  - Applying what you have learned
+  - Scope down
+  - Dealing with adversity
+  - Show the rejection letter
